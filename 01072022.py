@@ -2,34 +2,22 @@
 
 # Given a list of numbers, and a target number n, find all unique combinations of a, b, c, d, such that a + b + c + d = n.
 
+from itertools import combinations
 
-def fourSum(nums, target, partial=[]):
-    nums.sort(reverse = False)
+def fourSum(nums, target):
+    
+    nums.sort()
+    
+    def valid(val):
+        return sum(val) == target
 
-    sum = 0
-    counter = 0
+    # combinations list with elementos who sum is target - 4 is for quadruple
+    combinations_list = list(set(list(filter(valid, list(combinations(nums, 4))))))
 
-    if sum > target:
-        return partial
-
-    for i in range(counter, len(nums), 1):
- 
-        # Check if the sum exceeds K
-        if (sum + nums[i] > target):
-            continue
- 
-        # Check if it is repeated or not
-        if (i > counter and nums[i] == nums[i - 1]):
-            continue
- 
-        # Take the element into the combination
-        partial.append(nums[i])
- 
-        # Recursive call
-        fourSum(nums[i+1], sum + nums[i], partial)
- 
-        # Remove element from the combination
-        partial.remove(partial[len(partial) - 1])
+    # convert list of tuples to list of lists
+    result = [list(i) for i in combinations_list]
+          
+    return result
 
 
 
@@ -41,3 +29,5 @@ print(fourSum([3, 0, 1, -5, 4, 0, -1], 1))
 
 print(fourSum([0, 0, 0, 0, 0], 0))
 # print ([0, 0, 0, 0])
+
+
